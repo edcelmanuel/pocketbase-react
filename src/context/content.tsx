@@ -47,6 +47,7 @@ export const ContentProvider = (props: ContentProviderProps) => {
     // IDEA: Create new ErrorContext and Update it with error
     if (error?.originalError?.name !== 'AbortError') {
       console.log('Error in content provider', JSON.stringify(error));
+      throw new Error(JSON.stringify(error));
     }
   }
   const actions: ContentActions = {
@@ -99,10 +100,7 @@ export const ContentProvider = (props: ContentProviderProps) => {
         .catch(tempErrorHandler);
     },
     create: async (collectionName: string, record: {}) => {
-      return await client
-        ?.collection(collectionName)
-        .create(record)
-        .catch(tempErrorHandler);
+      return await client?.collection(collectionName).create(record).catch(tempErrorHandler);
     },
     update: async (collectionName: string, recordId: string, record: {}) => {
       return await client
@@ -111,10 +109,7 @@ export const ContentProvider = (props: ContentProviderProps) => {
         .catch(tempErrorHandler);
     },
     delete: async (collectionName: string, recordId: string) => {
-      return await client
-        ?.collection(collectionName)
-        .delete(recordId)
-        .catch(tempErrorHandler);
+      return await client?.collection(collectionName).delete(recordId).catch(tempErrorHandler);
     },
   };
 
